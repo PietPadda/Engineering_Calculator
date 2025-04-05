@@ -75,27 +75,31 @@ class UI:
         Label(input_frame, text="Duct Width", bg="white").grid(row=1, column=0, sticky="w", pady=5)
         self.width_var = StringVar()
         # creates a user entry widget for duct width
-        width_entry = Entry(input_frame, textvariable=self.width_var)  # auto updates when user types in field
+        width_entry = Entry(input_frame, textvariable=self.width_var, width=7)  # auto updates when user types in field
+        # widht = x --> how wide the field is
         # positions entry widget
         width_entry.grid(row=1, column=1, sticky="w", pady=5)
+        Label(input_frame, text="(mm)", bg="white").grid(row=1, column=2, sticky="e", pady=5)  # Unit label
 
         # DUCT HEIGHT
         # text label with white background
-        Label(input_frame, text="Duct Height", bg="white").grid(row=2, column=0, sticky="w", pady=5)
+        Label(input_frame, text="Duct Height", bg="white").grid(row=1, column=3, sticky="w", pady=5)
         self.height_var = StringVar()
         # creates a user entry widget for duct width
-        width_entry = Entry(input_frame, textvariable=self.height_var)  # auto updates when user types in field
+        width_entry = Entry(input_frame, textvariable=self.height_var, width=7)  # auto updates when user types in field
         # positions entry widget
-        width_entry.grid(row=2, column=1, sticky="w", pady=5)
+        width_entry.grid(row=1, column=4, sticky="w", pady=5)
+        Label(input_frame, text="(mm)", bg="white").grid(row=1, column=5, sticky="e", pady=5)  # Unit label
 
         # FLOW RATE
         # text label with white background
-        Label(input_frame, text="Flow Rate", bg="white").grid(row=3, column=0, sticky="w", pady=5)
+        Label(input_frame, text="Flow Rate", bg="white").grid(row=2, column=0, sticky="w", pady=5)
         self.flow_rate_var = StringVar()
         # creates a user entry widget for duct width
-        width_entry = Entry(input_frame, textvariable=self.flow_rate_var)  # auto updates when user types in field
+        width_entry = Entry(input_frame, textvariable=self.flow_rate_var, width=7)  # auto updates when user types in field
         # positions entry widget
-        width_entry.grid(row=3, column=1, sticky="w", pady=5)
+        width_entry.grid(row=2, column=1, sticky="w", pady=5)
+        Label(input_frame, text="(L/s)", bg="white").grid(row=2, column=2, sticky="e", pady=5)  # Unit label
 
 
 # Main guard
