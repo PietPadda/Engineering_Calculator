@@ -1,10 +1,20 @@
 # ui.py
 # tkinter graphical user interface
 
+# WINDOW IMPORT
 from tkinter import Tk, BOTH, Canvas  # import tkinter
-#Tk = window object container
-#BOTH = constant for pack() to fill the window in both x & y directions
-#Canvas = widget for implementing graphics
+# Tk = main window object container for application
+# BOTH = constant for pack() to fill the window/expand widgets in both x & y directions
+# Canvas = drawing area for graphics and visuals
+
+# INTERACTIVITY IMPORT
+from tkinter import Frame, Label, Entry, StringVar, OptionMenu, Button
+# Frame = container widget that holds other widgets
+# Label = widget that displays text/images
+# Entry = text input field to type
+# StringVar = this connects to widgets and updates them
+# OptionMenu = dropdown menu widget
+# Button = clickable widget
 
 # this is our GUI class
 class UI:
@@ -16,6 +26,7 @@ class UI:
         self.__canvas.pack(fill=BOTH, expand=1)  # pack the canvas to fill x&y and with window resizing
         self.__running = False  # UI window running flag
 
+    # WINDOW METHODS
     # need a method to update the visuals
     def redraw(self):
         self.__root.update_idletasks()  # process tasks in event queue
@@ -31,6 +42,29 @@ class UI:
     # add an X button in init to link to this method
     def close(self):  
         self.__running = False
+
+    # INPUT METHODS
+    # need a method to create input text fields and dropdowns
+    def create_input_fields(self):
+        # FRAMES -- to hold input widgets
+        input_frame = Frame(self.__root, bg="white", padx=10, pady=10)
+        # frame is placed inside window, padding pixels for the frame around the input
+        # canvas not used here as it's for graphics!
+        input_frame.pack(fill=BOTH, expand=0)  # DON'T expand the frame, but do fill with colour
+
+        # DROPDOWN -- select duct type
+        # text label with white background
+        Label(input_frame, text="Duct Type", bg="white").grid(row=0, column=0, sticky="w", pady=5)
+        # first row/col, aligned to West, X px vertical pad
+        # create tkinter var that holds dropdown selection
+        self.duct_type_var = StringVar(value="Rectangular")  # defaults to Rect
+        duct_types = ["Rectangular", "Round"]  # list of options
+        # create dropdown menu
+        dropdown = OptionMenu(input_frame, self.duct_type_var, *duct_types)
+        # menu in frame, StringVar for updating, * = UNPACK the list as separate args
+        # position the dropdown menu
+        dropdown.grid(row=0, column=1, sticky="w", pady=5)  # row1/col2, WEST, X px vertical pad
+
 
 # Main guard
 # This runs only when ui.py is executed directly
