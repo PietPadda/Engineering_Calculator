@@ -1,5 +1,6 @@
 # controller.py
 # passing duct.py calculations to the UI in ui.py
+# MVC - this is the C part ie controller
 
 from duct import Duct  # our duct calculations
 
@@ -8,7 +9,7 @@ class DuctController:
     # CORE: no init as we're not maintaining any state -- this is purely an intermediary class between duct.py and ui.py
 
     # get all the duct information from duct.py
-    def duct_properites(self, 
+    def duct_properties(self, 
                         duct_type, 
                         width, 
                         height, 
@@ -42,10 +43,10 @@ class DuctController:
             
             # now return the calculated values as DICT
             return {
-                "Area:": f"{area} m^2",
-                "Velocity:": f"{velocity} m/s",
-                "Success:": True,
-                "Error:": None
+                "Area": f"{area} m^2",
+                "Velocity": f"{velocity} m/s",
+                "Success": True,
+                "Error": None
             }
         
         # if the try block fails, output error info
@@ -66,7 +67,7 @@ if __name__ == "__main__":
     # Test rectangular duct
     print("Testing Rectangular Duct:")  # console step printout
     # return DICT as rect_result (for Rectangular case)
-    rect_result = controller.duct_properites(  # input sample values from duct.py to controller.py
+    rect_result = controller.duct_properties(  # input sample values from duct.py to controller.py
         duct_type="Rectangular",
         width=700,
         height=400,
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     
     print("\nTesting Round Duct:")  # console step printout
     # return DICT as round_result (for Round case)
-    round_result = controller.duct_properites(  # input sample values from duct.py to controller.py
+    round_result = controller.duct_properties(  # input sample values from duct.py to controller.py
         duct_type="Round",
         width=None,
         height=None,
@@ -92,7 +93,7 @@ if __name__ == "__main__":
     
     print("\nTesting Invalid Duct Type:")  # console step printout
     # return DICT as ValueError (for EXCEPT case)
-    invalid_result = controller.duct_properites(
+    invalid_result = controller.duct_properties(
         duct_type="Triangle",  # all invalid inputs, but "Triangle" will trigger the error
         width=-50,
         height="rth",

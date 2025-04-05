@@ -1,5 +1,7 @@
 # main.py
 # main application loop
+# We're using an MVC system -- main runs the application loop for the modeller, viewer and controller
+
 from ui import UI  # our tkinter GUI
 
 def main():

@@ -1,5 +1,6 @@
 # duct.py
 # duct calculations
+# MVC - this is the M part ie modeller
 
 import math  # for maths like pi etc
 
