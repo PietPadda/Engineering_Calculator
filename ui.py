@@ -8,11 +8,11 @@ from tkinter import Tk, BOTH, Canvas  # import tkinter
 
 # this is our GUI class
 class UI:
-    def __init__ (self, width, height):
+    def __init__ (self, width, height, bg="black"):
         self.__root = Tk()  # our widget data member
         self.__root.title("Engineering Solver")  # UI title
         self.__root.protocol( "WM_DELETE_WINDOW", self.close)  # X button linked to close method
-        self.__canvas = Canvas(self.__root, bg="black", width=width, height=height)  # canvas in window container
+        self.__canvas = Canvas(self.__root, bg=bg, width=width, height=height)  # canvas in window container
         self.__canvas.pack(fill=BOTH, expand=1)  # pack the canvas to fill x&y and with window resizing
         self.__running = False  # UI window running flag
 
@@ -32,3 +32,10 @@ class UI:
     def close(self):  
         self.__running = False
 
+# Main guard
+# This runs only when ui.py is executed directly
+if __name__ == "__main__":
+    # Create a test instance of the UI
+    test_ui = UI(800, 600, bg="pink")  # pink window
+    print("UI test window created. Close the window to exit.")
+    test_ui.wait_for_close()

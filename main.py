@@ -9,6 +9,7 @@ def main():
     window.wait_for_close()
 
 
+# Main guard
 # Need this to run!
 if __name__ == "__main__":
     main()
