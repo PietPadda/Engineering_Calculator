@@ -8,6 +8,10 @@ A desktop application designed for mechanical engineering calculations in the bu
 
 Below is a screenshot of the application running:
 
+* **Top Canvas**: Duct visualisations with input and output labels along with leaders to illustrate the output and issues (TODO)
+* **Mid Grid**: Dropdown selector for duct type along with input fields for dimensions and flow rate (Selecting round hides height and reuses Width as Diameter"
+* **Bottom Canvas**: "Terminal" simulation of outputs along with warnings, errors and design limitations
+
 ![Solver running](https://github.com/PietPadda/Engineering_Calculator/blob/main/Readme_Screenshot.png?raw=true)
 
 ## Features
@@ -76,6 +80,9 @@ This app was born out of a desire to simplify duct sizing—a common task in bui
     * Loss coefficient of static vs dynamic
     * Sound ppwer level
     * Sound pressure level
+* Add scrollable terminal canvas output to view output history 
+* Add timestamps in terminal output for better history tracking
+* Add PDF printout button to generate report with visualisation along with outputs
 
 ## Contributing
 
