@@ -77,7 +77,7 @@ class UI:
     # need a method to create input text fields and dropdowns
     def create_input_fields(self):
         # FRAMES -- to hold input widgets
-        input_frame = Frame(self.__root, bg="white", padx=10, pady=10)
+        input_frame = Frame(self.__root, bg="white", padx=0, pady=0)
         # frame is placed inside window, padding pixels for the frame around the input
         # canvas not used here as it's for graphics!
         input_frame.pack(fill=BOTH, expand=0)  # DON'T expand the frame, but do fill with colour
@@ -86,8 +86,8 @@ class UI:
         # DROPDOWN -- input by selection
         # DUCT TYPE SELECTOR
         # text label with white background
-        self.duct_types_label = Label(input_frame, text="Duct Type", bg="white")  # label instance
-        self.duct_types_label.grid(row=0, column=0, sticky="w", pady=5)  # grid position of label instance
+        self.duct_types_label = Label(input_frame, text="Duct Type", bg="white", font=("Arial", 8))  # label instance
+        self.duct_types_label.grid(row=0, column=0, sticky="w", pady=0)  # grid position of label instance
         # first row/col, aligned to West, X px vertical pad
         # create tkinter var that holds dropdown selection
         self.duct_type_var = StringVar(value="Rectangular")  # defaults to Rect
@@ -95,8 +95,9 @@ class UI:
         # create dropdown menu
         self.dropdown = OptionMenu(input_frame, self.duct_type_var, *duct_types)
         # menu in frame, StringVar for updating, * = UNPACK the list as separate args
+        self.dropdown.config(font=("Arial", 8))  # update dropdown font
         # position the dropdown menu
-        self.dropdown.grid(row=0, column=1, sticky="w", pady=5)  # row1/col2, WEST, X px vertical pad
+        self.dropdown.grid(row=0, column=1, sticky="w", pady=0)  # row1/col2, WEST, X px vertical pad
         # link toggle_duct_type_fields to the dropdown selector using trace
         self.duct_type_var.trace_add("write", self.toggle_duct_type_fields)
         # write = write operation watch, method to call on it
@@ -134,18 +135,19 @@ class UI:
         self.calculate_button = Button(input_frame,  # our button's frame
                                   text="Calculate",  # text in button
                                   command=self.run_calculation,  # this calls run calc
-                                  padx=10,  # button x & y padding
-                                  pady=5    
+                                  padx=0,  # button x & y padding
+                                  pady=0,
+                                  font=("Arial", 8)    
                                   )
         # grid -- apply button to our field gird position
-        self.calculate_button.grid(row=3, column=0, columnspan=2, pady=10, sticky="w")
+        self.calculate_button.grid(row=3, column=0, columnspan=2, pady=0, sticky="w")
 
     # HELPER method to reduce DRY code (less repetitive...)
     # basically makes the label, grid, var & unit, grid = one fell swoop!
     # input row = X, column = default 0, and every entry thereafter just adds 1!
-    def input_entry_helper(self, frame, text, bg, row, col=0, sticky="w", pady=5, width=7, unit=None):
+    def input_entry_helper(self, frame, text, bg, row, col=0, sticky="w", pady=0, width=7, unit=None):
         # text label with white background
-        label = Label(frame, text=text, bg=bg)  # label instance
+        label = Label(frame, text=text, bg=bg, font=("Arial", 8))  # label instance
         label.grid(row=row, column=col, sticky=sticky, pady=pady)  # grid position of label instance
         
         # creates a user entry widget for duct width
@@ -156,13 +158,11 @@ class UI:
         
         # if Unit text is entered, created a unit entry
         if unit is not None:
-            unit = Label(frame, text=unit, bg=bg)  # unit instance
+            unit = Label(frame, text=unit, bg=bg, font=("Arial", 8))  # unit instance
             unit.grid(row=row, column=col+2, sticky=sticky, pady=pady)  # grid position of unit instance
 
         # now return this to new entry
         return label, var, entry, unit
-
-
 
 
     # hides and renames fields to appropriate duct type
@@ -179,9 +179,9 @@ class UI:
                 self.width_label.config(text="Duct Width")
 
                 # show the height field
-                self.height_label.grid(row=1, column=3, sticky="w", pady=5)
-                self.height_entry.grid(row=1, column=4, sticky="w", pady=5)
-                self.height_unit.grid(row=1, column=5, sticky="e", pady=5)
+                self.height_label.grid(row=1, column=3, sticky="w", pady=0)
+                self.height_entry.grid(row=1, column=4, sticky="w", pady=0)
+                self.height_unit.grid(row=1, column=5, sticky="e", pady=0)
 
             case "Round":  # for a round duct
                 # set width label to duct width using config()
@@ -236,7 +236,7 @@ class UI:
         self.terminal = Text(self.__root, bg="black", fg="green", font=("Courier", 10), height=10)
         # bg = background colour, fg = text colour "foreground", font = font + textheight, height = TEXT block height
         # now place it on the canvas using pack()
-        self.terminal.pack(fill=BOTH, expand=1, padx=10, pady=10)
+        self.terminal.pack(fill=BOTH, expand=1, padx=0, pady=0)
 
     # this method is what's called when clicking the calculate/run button
     def display_results(self, results):
