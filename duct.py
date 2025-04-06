@@ -43,8 +43,8 @@ class Duct:
             # check if atleast width AND height is input
             if self.width is None or self.height is None:
                 raise ValueError("Width and height must be provided for rectangular duct!")
-            area = self.width * self.height * 1e-6  # convert to m^2
-            return area  # A = W*H (m^2)
+            area = self.width * self.height * 1e-6  # convert to m²
+            return area  # A = W*H (m²)
         
         # otherwise it's round
         # check if atleast diameter is input
@@ -52,8 +52,8 @@ class Duct:
             raise ValueError("Diameter must be provided for round duct!")
         
         # continue with area calculation
-        area = math.pi * (self.diameter/2)**2 * 1e-6  # convert to m^2
-        return area  # A = pi(d/2)^2 (m^2)
+        area = math.pi * (self.diameter/2)**2 * 1e-6  # convert to m²
+        return area  # A = pi(d/2)^2 (m²)
 
 
     # basic calculation of Q=VA -> V = Q/A
@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
     # Calculate Area
     area = rect_duct.calculate_area()  # get Ac
-    print(f"A: {area} m^2")  # debug print Area
+    print(f"A: {area} m²")  # debug print Area
 
     # Calculate Velocity
     velocity = rect_duct.calculate_velocity()  # get V

@@ -43,7 +43,7 @@ class DuctController:
             
             # now return the calculated values as DICT
             return {
-                "Area": f"{area:.3f} m^2",  # max 3 demical
+                "Area": f"{area:.3f} m²",  # max 3 demical
                 "Velocity": f"{velocity:.3f} m/s",
                 "Success": True,
                 "Error": None

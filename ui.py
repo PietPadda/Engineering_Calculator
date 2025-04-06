@@ -110,24 +110,71 @@ class UI:
         self.width_entry,
         self.width_unit) = (self.input_entry_helper(
                             input_frame, "Duct Width", "white", 1, 
-                            unit="(mm)"))
+                            unit="(mm)", default=300))  # default to 300 mm
         
         # DUCT HEIGHT
         (self.height_label,
         self.height_var,
         self.height_entry,
         self.height_unit) = (self.input_entry_helper(
-                            input_frame, "Duct Height", "white", 1, 3,  # same row as duct width, next col
-                            unit="(mm)"))
+                            input_frame, "Duct Height", "white", 1, 3,  # same row as duct width
+                            unit="(mm)", default=300))  # default to 300 mm
         
-        # FLOW_RATE
+        # FLOW RATE
         (self.flow_rate_label,
         self.flow_rate_var,
         self.flow_rate_entry,
         self.flow_rate_unit) = (self.input_entry_helper(
                             input_frame, "Flow Rate", "white", 2, 
-                            unit="(L/s)"))
+                            unit="(L/s)", default=300))  # default to 300 L/s
 
+        # DUCT ABSOLUTE ROUGHNESS
+        (self.roughness_label,
+        self.roughness_var,
+        self.roughness_entry,
+        self.roughness_unit) = (self.input_entry_helper(
+                            input_frame, "Absolute Roughness", "white", 2, 3,   # same row as flow rate
+                            unit="(mm)", default=0.09))  # default to 0.09mm (sheet metal)
+
+        # AMBIENT TEMPERATURE
+        (self.temperature_label,
+        self.temperature_var,
+        self.temperature_entry,
+        self.temperature_unit) = (self.input_entry_helper(
+                            input_frame, "Amb. Temperature", "white", 3,
+                            unit="(°C)", default=25))  # default to 25°C
+
+        # AMBIENT RELATIVE HUMIDITY
+        (self.amb_rh_label,
+        self.amb_rh_var,
+        self.amb_rh_entry,
+        self.amb_rh_unit) = (self.input_entry_helper(
+                            input_frame, "Amb. RH", "white", 3, 3,   # same row as air temperature
+                            unit="(%)", default=50))  # default to 50%
+
+        # ELEVATION
+        (self.elevation_label,
+        self.elevation_var,
+        self.elevation_entry,
+        self.elevation_unit) = (self.input_entry_helper(
+                            input_frame, "Elevation", "white", 4,
+                            unit="(m)", default=100))  # default to 100m
+
+        # NOISE DIRECTIVITY FACTOR
+        (self.noise_dir_label,
+        self.noise_dir_var,
+        self.noise_dir_entry,
+        self.noise_dir_unit) = (self.input_entry_helper(
+                            input_frame, "Noise Dir. Factor", "white", 4, 3,   # same row as elevation
+                            unit="(N/A)", default=1))  # default to 1 (worst case: top corner of room)
+
+        # NOISE DISTANCE TO SOURCE
+        (self.noise_dist_label,
+        self.noise_dist_var,
+        self.noise_dist_entry,
+        self.noise_dist_unit) = (self.input_entry_helper(
+                            input_frame, "Noise Distance", "white", 5,
+                            unit="(m)", default=2.1))  # default to 2.1m
 
         # BUTTONS -- input by clicking
         # CALCULATE
@@ -140,18 +187,18 @@ class UI:
                                   font=("Arial", 8)    
                                   )
         # grid -- apply button to our field gird position
-        self.calculate_button.grid(row=3, column=0, columnspan=2, pady=0, sticky="w")
+        self.calculate_button.grid(row=6, column=0, columnspan=2, pady=0, sticky="w")
 
     # HELPER method to reduce DRY code (less repetitive...)
     # basically makes the label, grid, var & unit, grid = one fell swoop!
     # input row = X, column = default 0, and every entry thereafter just adds 1!
-    def input_entry_helper(self, frame, text, bg, row, col=0, sticky="w", pady=0, width=7, unit=None):
+    def input_entry_helper(self, frame, text, bg, row, col=0, sticky="w", pady=0, width=7, unit=None, default=None):
         # text label with white background
         label = Label(frame, text=text, bg=bg, font=("Arial", 8))  # label instance
         label.grid(row=row, column=col, sticky=sticky, pady=pady)  # grid position of label instance
         
         # creates a user entry widget for duct width
-        var = StringVar()  # holds the tkinter var
+        var = StringVar(value=default)  # holds the tkinter var, with added optional default!
         entry = Entry(frame, textvariable=var, width=width)  # auto updates when user types in field
         entry.grid(row=row, column=col+1, sticky=sticky, pady=pady)  # grid position of entry instance
         # NOTE: width = x --> how wide the field is
