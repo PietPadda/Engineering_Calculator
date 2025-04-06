@@ -46,9 +46,30 @@ This app was born out of a desire to simplify duct sizing—a common task in bui
 
 ## Roadmap
 
-* Add input validation and warnings (e.g., high velocity alerts).
+* Add more input validation and warnings (e.g., high velocity alerts).
 * Visualize duct geometry with a simple isometric sketch.
-* Expand to include pipe sizing and heat loss solvers.
+* An arrow representing flow direction
+* Add visual tags to duct geometry with values from input fields (Dimensions, Flow rates etc.)
+* Expand to include the following inputs
+    * Absolute Roughness of duct based on material and wear
+    * Ambient temperature
+    * Ambient relative humidity
+    * Elevation
+    * Noise directivity factor
+    * Distance to noise source
+* Expand to include the following duct calculations
+    * Air Pressure
+    * Dynamic Viscosity
+    * Air Density
+    * Aspect Ratio
+    * Hydraulic Diameter
+    * Reynold's number
+    * Flow State based on Re
+    * Altshul-Tsal friction factor
+    * Pressure drop per unit meter
+    * Loss coefficient of static vs dynamic
+    * Sound ppwer level
+    * Sound pressure level
 
 ## Contributing
 
