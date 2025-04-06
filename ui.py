@@ -17,6 +17,12 @@ from tkinter import Frame, Label, Entry, StringVar, OptionMenu, Button
 # OptionMenu = dropdown menu widget
 # Button = clickable widget
 
+# "TERMINAL" TEXT IMPORT
+from tkinter import Text, DISABLED, END
+# Text = multiline text editing widget
+# DISABLED = constant for making a widget non-editable
+# END = constant for end position in a text widget
+
 # CONTROLLER IMPORT (getting model data to viewer via controller, MVC)
 from controller import DuctController  # our controller
 
@@ -43,6 +49,9 @@ class UI:
         # Add this line to create the input fields (instead of in main)
         # Create Input Fields in viewer
         self.create_input_fields()
+
+        # after inputs, call the "terminal" output method
+        self.create_terminal_output()
 
     # WINDOW METHODS
     # need a method to update the visuals
@@ -151,29 +160,33 @@ class UI:
 
         except ValueError:
             # need an error to print if we cannot reach the input fields
-             print("Missing input fields!")
+            # let's do this to terminal, using DICT struct
+            error_message = {"Error": "Missing input fields or invalid input!"}
+            self.display_results(error_message)
+
+    
+    # make a new Text widget below fields for "terminal" output simulation
+    def create_terminal_output(self):
+        # Create a terminal-like text area
+        self.terminal = Text(self.__root, bg="black", fg="green", font=("Courier", 10), height=10)
+        # bg = background colour, fg = text colour "foreground", font = font + textheight, height = TEXT block height
+        # now place it on the canvas using pack()
+        self.terminal.pack(fill=BOTH, expand=1, padx=10, pady=10)
 
     # this method is what's called when clicking the calculate/run button
     def display_results(self, results):
-        # create a results frame for placing on the canvas
-        self.results_frame = Frame(self.__root, bg="white", padx=10, pady=10)
-        self.results_frame.pack(fill=BOTH, expand=1)  # expand=1, need to fit to window
+        # clear previous results
+        self.terminal.config(state="normal")  # set editable temporarily to delete
+        # config() = widget options, state = editable, "normal" = allows editing
+        self.terminal.delete(1.0, END)  # delete and then set uneditable
+        # delete() = clear text from widget, 1.0 = start at line1 char 0, END = (delete from start to END of text)
 
-        # clear all old results on clicking the run button
-        # loop through results frame to find each widget
-        for widget in self.results_frame.winfo_children():
-            widget.destroy()
-            # .winfo_children() -- tkinter method getting all widgets inside the frame
-            # .destroy() -- tkinter method to clear (DESTROY!) the widget
+        # loop through result key:value's and print to "terminal" (use insert() for text widgets)
+        for key, value in results.items():  # .items() = just returns pairs from a dict
+            self.terminal.insert(END, f"{key}: {value}\n")  # insert at END position
 
-        # now that we've got a clean slate, let's display the results!
-        row = 0  # we'll place it at top of canvas
-        # next loop through each key:value pair of our results dictionary
-        for key, value in results.items():
-            # how to present? create labels
-            Label(self.results_frame, text=f"{key}:", bg="white").grid(row=row, column=0, sticky="w", pady=5)  # key:
-            Label(self.results_frame, text=str(value), bg="white").grid(row=row, column=1, sticky="w", pady=5)  # value
-            row += 1  # row++ for each loop to print out each dict result per iteration
+        # after clearing and inserting text, remove editing
+        self.terminal.config(state=DISABLED)
 
 
 # Main guard
