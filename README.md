@@ -4,6 +4,12 @@ Markdown
 
 A desktop application designed for mechanical engineering calculations in the building services construction industry. The initial focus is a user-friendly duct sizing solver that calculates key parameters like area and velocity, built from scratch using Python and Tkinter. This tool aims to streamline workflows by replacing cumbersome Excel-based methods with an intuitive interface and robust error handling.
 
+# The Solver in Action
+
+Below is a screenshot of the application running:
+
+![Solver running](https://github.com/PietPadda/Engineering_Calculator/blob/main/Readme_Screenshot.png?raw=true)
+
 ## Features
 
 * **Duct Sizing Solver**: Calculate cross-sectional area and airflow velocity for rectangular and round ducts.
