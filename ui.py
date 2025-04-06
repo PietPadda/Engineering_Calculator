@@ -102,44 +102,31 @@ class UI:
         # write = write operation watch, method to call on it
 
 
-
         # ENTRIES -- input typing text fields
         # DUCT WIDTH / DUCT DIAMETER (reuse same field for both entries)
-        # text label with white background
-        self.width_label = Label(input_frame, text="Duct Width", bg="white")  # label instance
-        self.width_label.grid(row=1, column=0, sticky="w", pady=5)  # grid position of label instance
-        self.width_var = StringVar()
-        # creates a user entry widget for duct width
-        self.width_entry = Entry(input_frame, textvariable=self.width_var, width=7)  # auto updates when user types in field
-        # widht = x --> how wide the field is
-        # positions entry widget
-        self.width_entry.grid(row=1, column=1, sticky="w", pady=5)
-        self.width_unit = Label(input_frame, text="(mm)", bg="white")  # unit instance
-        self.width_unit.grid(row=1, column=2, sticky="e", pady=5)  # grid position of unit instance
-
+        (self.width_label,
+        self.width_var,
+        self.width_entry,
+        self.width_unit) = (self.input_entry_helper(
+                            input_frame, "Duct Width", "white", 1, 
+                            unit="(mm)"))
+        
         # DUCT HEIGHT
-        # text label with white background
-        self.height_label = Label(input_frame, text="Duct Height", bg="white")  # label instance
-        self.height_label.grid(row=1, column=3, sticky="w", pady=5)  # grid position of label instance
-        self.height_var = StringVar()
-        # creates a user entry widget for duct width
-        self.height_entry = Entry(input_frame, textvariable=self.height_var, width=7)  # auto updates when user types in field
-        # positions entry widget
-        self.height_entry.grid(row=1, column=4, sticky="w", pady=5)
-        self.height_unit = Label(input_frame, text="(mm)", bg="white")  # unit instance
-        self.height_unit.grid(row=1, column=5, sticky="e", pady=5)  # grid position of unit instance
+        (self.height_label,
+        self.height_var,
+        self.height_entry,
+        self.height_unit) = (self.input_entry_helper(
+                            input_frame, "Duct Height", "white", 1, 3,  # same row as duct width, next col
+                            unit="(mm)"))
+        
+        # FLOW_RATE
+        (self.flow_rate_label,
+        self.flow_rate_var,
+        self.flow_rate_entry,
+        self.flow_rate_unit) = (self.input_entry_helper(
+                            input_frame, "Flow Rate", "white", 2, 
+                            unit="(L/s)"))
 
-        # FLOW RATE
-        # text label with white background
-        self.flow_rate_label = Label(input_frame, text="Flow Rate", bg="white")  # label instance
-        self.flow_rate_label.grid(row=2, column=0, sticky="w", pady=5)  # grid position of label instance
-        self.flow_rate_var = StringVar()
-        # creates a user entry widget for duct width
-        self.flow_rate_entry = Entry(input_frame, textvariable=self.flow_rate_var, width=7)  # auto updates when user types in field
-        # positions entry widget
-        self.flow_rate_entry.grid(row=2, column=1, sticky="w", pady=5)
-        self.flow_rate_unit = Label(input_frame, text="(L/s)", bg="white")  # unit instance
-        self.flow_rate_unit.grid(row=2, column=2, sticky="e", pady=5)  # grid position of unit instance
 
         # BUTTONS -- input by clicking
         # CALCULATE
@@ -152,6 +139,30 @@ class UI:
                                   )
         # grid -- apply button to our field gird position
         self.calculate_button.grid(row=3, column=0, columnspan=2, pady=10, sticky="w")
+
+    # HELPER method to reduce DRY code (less repetitive...)
+    # basically makes the label, grid, var & unit, grid = one fell swoop!
+    # input row = X, column = default 0, and every entry thereafter just adds 1!
+    def input_entry_helper(self, frame, text, bg, row, col=0, sticky="w", pady=5, width=7, unit=None):
+        # text label with white background
+        label = Label(frame, text=text, bg=bg)  # label instance
+        label.grid(row=row, column=col, sticky=sticky, pady=pady)  # grid position of label instance
+        
+        # creates a user entry widget for duct width
+        var = StringVar()  # holds the tkinter var
+        entry = Entry(frame, textvariable=var, width=width)  # auto updates when user types in field
+        entry.grid(row=row, column=col+1, sticky=sticky, pady=pady)  # grid position of entry instance
+        # NOTE: width = x --> how wide the field is
+        
+        # if Unit text is entered, created a unit entry
+        if unit is not None:
+            unit = Label(frame, text=unit, bg=bg)  # unit instance
+            unit.grid(row=row, column=col+2, sticky=sticky, pady=pady)  # grid position of unit instance
+
+        # now return this to new entry
+        return label, var, entry, unit
+
+
 
 
     # hides and renames fields to appropriate duct type
