@@ -302,7 +302,7 @@ class Duct:
             return self._static_pressure # already calcd, reuse when func is called!
         
         f = self.calculate_altshul_tsal()  # cache call
-        Dh = self.calculate_hydraulic_diameter  # cache call
+        Dh = self.calculate_hydraulic_diameter()  # cache call
         p = self.calculate_air_density()  # cache call
         V = self.calculate_velocity()  # cache call
 

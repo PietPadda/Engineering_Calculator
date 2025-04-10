@@ -263,9 +263,22 @@ class UI:
                     width = diameter  # Not really used, but keep for API compatibility
                     height = None  # not used
 
+            # all the remaining inputs go here
+            roughness = float(self.roughness_var.get())  # duct roughness
+            temperature = float(self.temperature_var.get())  # ambient temperature
+            relative_humidity = float(self.amb_rh_var.get())  # ambient relative humidity
+            elevation = float(self.elevation_var.get())  # elevation
+            noise_direction_factor = int(self.noise_dir_var.get())  # noise direction factor
+            noise_distance = float(self.noise_dist_var.get())  # noise distance
+
             # now that we've validated the correct duct types, let's process the results
             # call the controller to provide us with the calculated results (from duct.py)
-            results = self.controller.duct_properties(duct_type, width, height, diameter, flow_rate)
+            # match the order of duct_properties()
+            results = self.controller.duct_properties(
+                duct_type, flow_rate, roughness, temperature, 
+                relative_humidity, elevation, noise_direction_factor, 
+                noise_distance, width, height, diameter
+            )
             
             # now that we have the inputs & calculations successfully, let's display the results!
             self.display_results(results)
@@ -280,8 +293,8 @@ class UI:
     # make a new Text widget below fields for "terminal" output simulation
     def create_terminal_output(self):
         # Create a terminal-like text area
-        self.terminal = Text(self.__root, bg="black", fg="green", font=("Courier", 10), height=10)
-        # bg = background colour, fg = text colour "foreground", font = font + textheight, height = TEXT block height
+        self.terminal = Text(self.__root, bg="black", fg="green", font=("Courier", 9), height=17)
+        # bg = background colour, fg = text colour "foreground", font = font + textheight, height = TEXT block height (number of lines)
         # now place it on the canvas using pack()
         self.terminal.pack(fill=BOTH, expand=1, padx=0, pady=0)
 
