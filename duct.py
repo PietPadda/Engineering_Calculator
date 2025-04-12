@@ -192,11 +192,11 @@ class Duct:
         Centipoise = 0.01827
         T_ref_R = 524.07  # reference T (°R)
         T_amb_R = self.temperature*9/5+491.67  # ambient air °C to °R conversion
-        constant_A = 0.555*T_amb_R+Sutherlands_constant  # first constant in the calc
-        constant_B = 0.555*T_ref_R+Sutherlands_constant  # second constant in the calc
+        constant_A = 0.555*T_ref_R+Sutherlands_constant  # first constant in the calc
+        constant_B = 0.555*T_amb_R+Sutherlands_constant  # second constant in the calc
 
         # store cache
-        self._dynamic_viscosity = Centipoise*(constant_A/constant_B)*(T_ref_R/T_amb_R)**(3/2)/1000  # (kg/ms)
+        self._dynamic_viscosity = Centipoise*(constant_A/constant_B)*(T_amb_R/T_ref_R)**(3/2)/1000  # (kg/ms)
         return self._dynamic_viscosity
 
     # air density is critical for friction calcs
@@ -214,7 +214,7 @@ class Duct:
         Rv = 461.495  # specific gas constant for water vapour (J/kg.K)
         P = 101325 * (1 - 2.25577 * (10**-5) * elevation) ** 5.25588  # air pressure at elevation (Pa)
         P1 = 6.1078 * 10 ** (7.5 * temp /(temp + 237.3))  # Saturated Vapour Pressure at given Temperature (Pa)
-        Pv = (Rh * 100) * P1  # Actual Vapour Pressure (Pa)
+        Pv = Rh * P1  # Actual Vapour Pressure (Pa)
         Pd = P - Pv  # Dry air pressure (Pa)
         T_K = temp + 273.15  # air temp in kelvin (K)
 
@@ -231,13 +231,13 @@ class Duct:
         u = self.calculate_dynamic_viscosity()  # cache call
         p = self.calculate_air_density()  # cache call
         Dh = self.calculate_hydraulic_diameter()  # cache call
-        Q = self.flow_rate / 1000  # flow rate in cubes (m3/s)
+        V = self.calculate_velocity()  # cache call
 
         # calculate kinematic viscosity
         v = u / p  # kinematic viscosity (m^2/s)
 
         # cache store
-        self._reynolds = Q * Dh / v  # Reynold's number (N/A)
+        self._reynolds = V * Dh / v  # Reynold's number (N/A)
         return self._reynolds
 
     # Flow state of air is calculated via the Reynold's number

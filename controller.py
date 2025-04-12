@@ -69,20 +69,20 @@ class DuctController:
             
             # now return the calculated values as DICT
             return {
-                "Area": f"{duct.calculate_area():.3f} m²",  # max 3 demical
+                "Cross-sectional Area": f"{duct.calculate_area():.3f} m²",  # max 3 decimal
                 "Velocity": f"{duct.calculate_velocity():.3f} m/s",
                 "Perimeter": f"{duct.calculate_duct_perimeter():.3f} m",
                 "Equivalent Diameter": f"{duct.calculate_equivalent_diameter():.3f} m",
                 "Hydraulic Diameter": f"{duct.calculate_hydraulic_diameter():.3f} m",
-                "Dynamic Viscosity": f"{duct.calculate_dynamic_viscosity():.3f} kg/m.s",
+                "Dynamic Viscosity": f"{duct.calculate_dynamic_viscosity():.3e} kg/m.s",  # 3 digit scientific notation
                 "Air Density": f"{duct.calculate_air_density():.3f} kg/m³",
-                "Reynold's Number": f"{duct.calculate_reynolds_number():.3f} N/A",
+                "Reynold's Number": f"{duct.calculate_reynolds_number():.3f}",
                 "Flow State": duct.calculate_flow_state(),
-                "Friction Factor": f"{duct.calculate_altshul_tsal():.3f}",
+                "Friction Factor": f"{duct.calculate_altshul_tsal():.3e}",
                 "Static Pressure Drop": f"{duct.calculate_static_pressure_drop():.3f} Pa/m",
                 "Dynamic Pressure Drop": f"{duct.calculate_dynamic_pressure_drop():.3f} Pa/m",
                 "Total Pressure Drop": f"{duct.calculate_total_pressure_drop():.3f} Pa/m",
-                "Loss Coefficient": f"{duct.calculate_loss_coefficient():.3f}",
+                "Loss Coefficient": f"{duct.calculate_loss_coefficient():.3e}",
                 "Sound Power Level": f"{duct.calculate_SWL():.3f} dB",
                 "Sound Pressure Level": f"{duct.calculate_SPL():.3f} dB",
             }
