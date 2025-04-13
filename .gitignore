@@ -4,3 +4,6 @@ __pycache__/
 # don't commit exe builds
 build/
 dist/
+
+# pyinstaller spec file
+main.spec

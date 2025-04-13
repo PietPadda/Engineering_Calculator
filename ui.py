@@ -39,8 +39,16 @@ class UI:
         self.__root = Tk()  # our widget data member
         self.__root.title("Engineering Solver")  # UI title
         self.__root.protocol( "WM_DELETE_WINDOW", self.close)  # X button linked to close method
-        self.__canvas = Canvas(self.__root, bg=bg, width=width, height=height)  # canvas in window container
+
+        # canvas
+        self._canvas_width = width  # canvas width
+        self._canvas_height = height  # canvas height
+        self.__canvas = Canvas(self.__root, bg=bg, width=self._canvas_width, height=self._canvas_height)  # canvas in window container
         self.__canvas.pack(fill=BOTH, expand=1)  # pack the canvas to fill x&y and with window resizing
+
+        # call draw duct method
+        self._draw_static_duct()  # this draws a duct in the window
+
         self.__running = False  # UI window running flag
 
         # Create Controller instance to link model files to viewer
@@ -293,7 +301,7 @@ class UI:
     # make a new Text widget below fields for "terminal" output simulation
     def create_terminal_output(self):
         # Create a terminal-like text area
-        self.terminal = Text(self.__root, bg="black", fg="green", font=("Courier", 9), height=17)
+        self.terminal = Text(self.__root, bg="black", fg="lime", font=("Courier", 9), height=17)
         # bg = background colour, fg = text colour "foreground", font = font + textheight, height = TEXT block height (number of lines)
         # now place it on the canvas using pack()
         self.terminal.pack(fill=BOTH, expand=1, padx=0, pady=0)
@@ -312,6 +320,71 @@ class UI:
 
         # after clearing and inserting text, remove editing
         self.terminal.config(state=DISABLED)
+
+
+
+
+    def _draw_static_duct(self):
+        # clear the duct from canvas before drawing
+        self.__canvas.delete("duct_drawing")
+
+        # duct centre points
+        centre_x = self._canvas_width / 2  # set to canvas half size
+        centre_y = self._canvas_height / 2  # set to canvas half size
+
+        # set duct box dimensions
+        box_width = 100
+        box_height = 60
+        box_depth = 100
+
+        # isometric offsets
+        iso_x_depth = box_depth * 0.6  # horizontal depth
+        iso_y_depth = box_depth * 0.45  # vertical depth
+
+        # duct corner points
+        front_y_adjust = -iso_y_depth / 3  # this shifts the entire object to sit better relative to centre
+
+        # front top left
+        point_front_top_left = (centre_x - box_width/2, centre_y - box_height/2 + front_y_adjust)
+        # front top right
+        point_front_top_right = (centre_x + box_width/2, centre_y - box_height/2 + front_y_adjust)
+        # front bottom right
+        point_front_bottom_right = (centre_x + box_width/2, centre_y + box_height/2 + front_y_adjust)
+        # front bottom left
+        point_front_bottom_left = (centre_x - box_width/2, centre_y + box_height/2 + front_y_adjust)
+
+        # back top left
+        point_back_top_left = (point_front_top_left[0] + iso_x_depth, point_front_top_left[1] + iso_y_depth)
+        # bottom top right
+        point_back_top_right = (point_front_top_right[0] + iso_x_depth, point_front_top_right[1] + iso_y_depth)
+        # bottom bottom right
+        point_back_bottom_right = (point_front_bottom_right[0] + iso_x_depth, point_front_bottom_right[1] + iso_y_depth)
+        # bottom bottom left
+        point_back_bottom_left = (point_front_bottom_left[0] + iso_x_depth, point_front_bottom_left[1] + iso_y_depth)
+
+        # draw the lines
+        line_colour_hor = "lime"
+        line_colour_ver = "blue"
+        line_colour_iso = "red"
+        line_width = 3
+
+        # draw front face (drawing clockwise from top left)
+        self.__canvas.create_line(point_front_top_left, point_front_top_right, fill=line_colour_hor, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_front_top_right, point_front_bottom_right, fill=line_colour_ver, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_front_bottom_right, point_front_bottom_left, fill=line_colour_hor, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_front_bottom_left, point_front_top_left, fill=line_colour_ver, width=line_width, tags="duct_drawing")
+
+        # draw back face (drawing clockwise from top left)
+        self.__canvas.create_line(point_back_top_left, point_back_top_right, fill=line_colour_hor, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_back_top_right, point_back_bottom_right, fill=line_colour_ver, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_back_bottom_right, point_back_bottom_left, fill=line_colour_hor, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_back_bottom_left, point_back_top_left, fill=line_colour_ver, width=line_width, tags="duct_drawing")
+
+        # draw connecting depth lines (front to back corners)
+        self.__canvas.create_line(point_front_top_left, point_back_top_left, fill=line_colour_iso, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_front_top_right, point_back_top_right, fill=line_colour_iso, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_front_bottom_right, point_back_bottom_right, fill=line_colour_iso, width=line_width, tags="duct_drawing")
+        self.__canvas.create_line(point_front_bottom_left, point_back_bottom_left, fill=line_colour_iso, width=line_width, tags="duct_drawing")
 
 
 # Main guard
